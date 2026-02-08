@@ -1,0 +1,47 @@
+{
+  "name": "devcontainer-playground: python + uv",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Python Core (ESSENTIAL)
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        
+        // Python Tools (ESSENTIAL)
+        "astral-sh.uv",
+        "charliermarsh.ruff",  // Handles formatting + linting
+        "astral-sh.ty",
+        
+        // GitHub & Copilot (if you use them)
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+                
+        // Docker
+        "ms-azuretools.vscode-docker",
+        
+        // Development Tools
+        "ms-vscode.makefile-tools",
+
+        // Code Quality
+        "streetsidesoftware.code-spell-checker",
+        
+        // UI Enhancements
+        "christian-kohler.path-intellisense",
+        "oderwat.indent-rainbow",
+
+        // Ansible specifics
+        "redhat.ansible",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        // VS Code settings are available locally and will sync to Codespaces automatically if GitHub Settings Sync is enabled
+      }
+    }
+  }
+}
