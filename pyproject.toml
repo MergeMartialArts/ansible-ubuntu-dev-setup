@@ -1,0 +1,25 @@
+[project]
+name = "ansible-ubuntu-dev-setup"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Tony Klein", email = "mergemartialarts@tony-klein.de" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+ansible-ubuntu-dev-setup = "ansible_ubuntu_dev_setup:main"
+
+[build-system]
+requires = ["uv_build>=0.10.0,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ansible>=13.3.0",
+    "ansible-dev-tools>=26.1.0",
+    "molecule>=25.12.0",
+    "molecule-plugins[docker]>=25.8.12",
+]
