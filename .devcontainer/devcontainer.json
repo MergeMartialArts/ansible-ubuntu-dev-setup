@@ -1,5 +1,5 @@
 {
-  "name": "devcontainer-playground: python + uv",
+  "name": "devcontainer: ansible",
   "build": {
     "dockerfile": "Dockerfile",
     "context": ".."
