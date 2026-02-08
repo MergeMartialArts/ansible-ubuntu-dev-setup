@@ -1,0 +1,137 @@
+---
+- name: Verify Docker Installation
+  hosts: all
+  become: true
+  tasks:
+    - name: Check if Docker is installed
+      ansible.builtin.command: docker --version
+      register: docker_version_output
+      changed_when: false
+      failed_when: docker_version_output.rc != 0
+
+    - name: Verify Docker version output
+      ansible.builtin.assert:
+        that:
+          - "'Docker version' in docker_version_output.stdout"
+        success_msg: "Docker is installed and version command works"
+        fail_msg: "Docker version command did not return expected output"
+
+    - name: Check if Docker Compose plugin is installed
+      ansible.builtin.command: docker compose version
+      register: compose_version_output
+      changed_when: false
+      failed_when: compose_version_output.rc != 0
+
+    - name: Verify Docker Compose version output
+      ansible.builtin.assert:
+        that:
+          - "'Docker Compose version' in compose_version_output.stdout"
+        success_msg: "Docker Compose plugin is installed"
+        fail_msg: "Docker Compose plugin is not properly installed"
+
+    - name: Check if Docker daemon is running
+      ansible.builtin.systemd:
+        name: docker
+      register: docker_service
+      failed_when: docker_service.status.ActiveState != 'active'
+
+    - name: Verify Docker service is enabled
+      ansible.builtin.assert:
+        that:
+          - docker_service.status.UnitFileState == 'enabled'
+        success_msg: "Docker service is enabled to start on boot"
+        fail_msg: "Docker service is not enabled"
+
+    - name: Check if all required Docker packages are installed
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Verify Docker CE package is installed
+      ansible.builtin.assert:
+        that:
+          - "'docker-ce' in ansible_facts.packages"
+        success_msg: "Docker CE is installed"
+        fail_msg: "Docker CE package is not installed"
+
+    - name: Verify Docker CLI package is installed
+      ansible.builtin.assert:
+        that:
+          - "'docker-ce-cli' in ansible_facts.packages"
+        success_msg: "Docker CLI is installed"
+        fail_msg: "Docker CLI package is not installed"
+
+    - name: Verify containerd.io package is installed
+      ansible.builtin.assert:
+        that:
+          - "'containerd.io' in ansible_facts.packages"
+        success_msg: "containerd.io is installed"
+        fail_msg: "containerd.io package is not installed"
+
+    - name: Verify Docker Buildx plugin is installed
+      ansible.builtin.assert:
+        that:
+          - "'docker-buildx-plugin' in ansible_facts.packages"
+        success_msg: "Docker Buildx plugin is installed"
+        fail_msg: "Docker Buildx plugin is not installed"
+
+    - name: Verify Docker Compose plugin package is installed
+      ansible.builtin.assert:
+        that:
+          - "'docker-compose-plugin' in ansible_facts.packages"
+        success_msg: "Docker Compose plugin package is installed"
+        fail_msg: "Docker Compose plugin package is not installed"
+
+    - name: Check if conflicting packages are removed
+      ansible.builtin.assert:
+        that:
+          - "'docker.io' not in ansible_facts.packages"
+          - "'podman-docker' not in ansible_facts.packages"
+        success_msg: "Conflicting Docker packages are not installed"
+        fail_msg: "Some conflicting Docker packages are still installed"
+
+    - name: Get information about docker group
+      ansible.builtin.getent:
+        database: group
+        key: docker
+      register: docker_group
+
+    - name: Verify docker group exists
+      ansible.builtin.assert:
+        that:
+          - docker_group.ansible_facts.getent_group.docker is defined
+        success_msg: "Docker group exists"
+        fail_msg: "Docker group does not exist"
+
+    - name: Check Docker system info
+      ansible.builtin.command: docker info
+      register: docker_info
+      changed_when: false
+      failed_when: docker_info.rc != 0
+
+    - name: Verify Docker storage driver
+      ansible.builtin.assert:
+        that:
+          - "'Storage Driver' in docker_info.stdout"
+        success_msg: "Docker storage driver is configured"
+        fail_msg: "Docker storage driver information not found"
+
+    - name: Test Docker Buildx functionality
+      ansible.builtin.command: docker buildx version
+      register: buildx_version
+      changed_when: false
+      failed_when: buildx_version.rc != 0
+
+    - name: Verify Buildx is working
+      ansible.builtin.assert:
+        that:
+          - "'github.com/docker/buildx' in buildx_version.stdout"
+        success_msg: "Docker Buildx is functional"
+        fail_msg: "Docker Buildx is not working properly"
+
+    - name: Display test summary
+      ansible.builtin.debug:
+        msg:
+          - "✅ All Docker installation tests passed!"
+          - "Docker Version: {{ docker_version_output.stdout }}"
+          - "Compose Version: {{ compose_version_output.stdout }}"
+          - "Service Status: {{ docker_service.status.ActiveState }}"

@@ -1,0 +1,3 @@
+{
+    "ansible.python.interpreterPath": "/workspaces/ansible-ubuntu-dev-setup/.venv/bin/python"
+}
