@@ -1,0 +1,23 @@
+# Hadolint configuration
+# See: https://github.com/hadolint/hadolint
+
+# Rules to ignore (if needed)
+ignored:
+  # - DL3000  # Use absolute WORKDIR
+  # - DL3007  # Using latest tag
+
+# Trusted registries - only allow pulling from these
+trustedRegistries:
+  - mcr.microsoft.com
+  - docker.io
+# Treat specified rules as errors (default is warning)
+# failure-threshold: error
+
+# Override specific rules
+# override:
+#   error:
+#     - DL3001
+#   warning:
+#     - DL3002
+#   info:
+#     - DL3003

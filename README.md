@@ -4,7 +4,7 @@ Bootstrap an Ubuntu developer environment with Ansible. This repo is designed to
 
 ## Quick Start (run on a new Ubuntu host)
 1. Install `uv` (if not already):
-   
+
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
