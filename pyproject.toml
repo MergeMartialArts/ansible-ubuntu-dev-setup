@@ -23,6 +23,7 @@ dev = [
     "ansible-dev-tools>=26.1.0",
     "molecule>=25.12.0",
     "molecule-plugins[docker]>=25.8.12",
+    "pre-commit>=4.5.1",
 ]
 
 # Exclude dev dependencies from default sync

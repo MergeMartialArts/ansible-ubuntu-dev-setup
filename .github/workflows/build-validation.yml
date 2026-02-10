@@ -12,6 +12,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  hadolint:
+    name: Lint Dockerfile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: .devcontainer/Dockerfile
+          failure-threshold: warning
+
   lint:
     name: Lint Playbooks
     runs-on: ubuntu-latest

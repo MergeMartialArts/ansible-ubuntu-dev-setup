@@ -1,3 +1,9 @@
 {
-    "ansible.python.interpreterPath": "/workspaces/ansible-ubuntu-dev-setup/.venv/bin/python"
+    "ansible.python.interpreterPath": "/workspaces/ansible-ubuntu-dev-setup/.venv/bin/python",
+    "[dockerfile]": {
+        "editor.formatOnSave": true,                          // Auto-format Dockerfile on save
+        "editor.defaultFormatter": "ms-azuretools.vscode-containers", // Docker extension formatter
+        "editor.tabSize": 4
+    },
+    "docker.languageserver.formatter.ignoreMultilineInstructions": true
 }

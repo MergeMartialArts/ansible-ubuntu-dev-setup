@@ -5,6 +5,9 @@
     "context": ".."
   },
   "postCreateCommand": "uv sync --dev",
+  "remoteEnv": {
+    "UV_LINK_MODE": "copy"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -12,29 +15,30 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.debugpy",
-        
+
         // Python Tools (ESSENTIAL)
         "astral-sh.uv",
         "charliermarsh.ruff",  // Handles formatting + linting
         "astral-sh.ty",
-        
+
         // GitHub & Copilot (if you use them)
         "github.copilot",
         "github.copilot-chat",
         "github.vscode-pull-request-github",
-                
+
         // Docker
         "ms-azuretools.vscode-docker",
-        
+
         // Development Tools
         "ms-vscode.makefile-tools",
 
         // Code Quality
         "streetsidesoftware.code-spell-checker",
-        
+
         // UI Enhancements
         "christian-kohler.path-intellisense",
         "oderwat.indent-rainbow",
+        "PKief.material-icon-theme",
 
         // Ansible specifics
         "redhat.ansible",
